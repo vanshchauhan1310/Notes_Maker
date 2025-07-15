@@ -104,7 +104,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(data, { status: 201 });
   } catch (error) {
-    console.error("[BOOKMARKS][POST] API route error:", error, error?.stack);
+    if (error instanceof Error) {
+      console.error("[BOOKMARKS][POST] API route error:", error, error.stack);
+    } else {
+      console.error("[BOOKMARKS][POST] API route error:", error);
+    }
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
